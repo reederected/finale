@@ -1,2 +1,2 @@
 # finale
-Just an update 7 (after workflow)
+Just an update 8 with PR title check
