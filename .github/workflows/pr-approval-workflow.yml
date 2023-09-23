@@ -4,6 +4,7 @@ on:
   pull_request:
     branches:
       - StagingRelease*
+    types: [synchronize]
   pull_request_review:
     types: [submitted]
 
