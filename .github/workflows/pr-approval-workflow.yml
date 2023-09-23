@@ -9,6 +9,7 @@ on:
 
 jobs:
   check-approvals:
+    if: startsWith(github.event.pull_request.base.ref, 'StagingRelease')
     runs-on: ubuntu-latest
     permissions:
       id-token: write
