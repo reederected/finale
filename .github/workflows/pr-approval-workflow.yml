@@ -1,15 +1,14 @@
 name: PR Approval Workflow
 
 on:
-  pull_request:
-    branches:
-      - StagingRelease*
   pull_request_review:
     types: [submitted]
 
 jobs:
   check-approvals:
-    if: startsWith(github.event.pull_request.base.ref, 'StagingRelease')
+    if: >-
+      startsWith(github.event.pull_request.base.ref, 'StagingRelease') ||
+      startsWith(github.event.pull_request.base.ref, 'LiveRelease')
     runs-on: ubuntu-latest
     permissions:
       id-token: write
@@ -18,7 +17,7 @@ jobs:
     steps:
       - name: Check for required approvals
         id: check-approvals
-        uses: skymoore/required-approvals@v3
+        uses: mreeder/required-approvals@v1-beta
         with:
           token: ${{ secrets.GITHUB_TOKEN }}
           read_org_scoped_token: ${{ secrets.READ_ORG_SCOPED_TOKEN }}
@@ -28,4 +27,4 @@ jobs:
       - name: Run action if all required approvals are met
         if: ${{ steps.check-approvals.outputs.approved == 'true' }}
         run: |
-          echo "All required approvals are met. Running the action."
+          echo "All required approvals are met."
